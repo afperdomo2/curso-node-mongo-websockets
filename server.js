@@ -1,10 +1,13 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const router = express.Router();
 
 const app = express();
-const port = 3000;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(router);// Router debe ir después de bodyParser
 
-app.use(router);
+const port = 3000;
 
 router.get('/', (req, res) => {
     res.send('Inicio');
@@ -16,7 +19,9 @@ router.post('/message', (req, res) => {
     res.send('Mensaje añadido');
 });
 router.delete('/message', (req, res) => {
-    res.send('Mensaje borrado');
+    console.log(req.query);
+    console.log(req.body);
+    res.send(`Mensaje: ${req.body.message}`);
 });
 
 app.listen(port, () => {
