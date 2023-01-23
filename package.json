@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/alvarado0925/curso-node-mongo-websockets/issues"
   },
-  "homepage": "https://github.com/alvarado0925/curso-node-mongo-websockets#readme"
+  "homepage": "https://github.com/alvarado0925/curso-node-mongo-websockets#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
