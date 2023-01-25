@@ -11,6 +11,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(router);// Router debe ir después de bodyParser
 
+// Servir archivos estáticos
+app.use('/app', express.static('public'));
+
 const port = 3000;
 
 router.get('/message', (req, res) => {
@@ -38,10 +41,5 @@ router.get('/', (req, res) => {
     console.log(req.query);
     // Imprimie el body de la solicitud
     console.log(req.body);
-    // Agrega un estado y una respuesta estructurada
-    res.status(201).send({
-        error: '',
-        body: 'Creado correctamente'
-    });
     res.send('Inicio');
 });
