@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = express.Router();
+const response = require('./network/response');
 
 const app = express();
 // BodyParser: Permite definir los tipos de Body
@@ -12,29 +13,35 @@ app.use(router);// Router debe ir después de bodyParser
 
 const port = 3000;
 
-router.get('/', (req, res) => {
-    res.send('Inicio');
-});
 router.get('/message', (req, res) => {
-    console.log(req.headers);// Imprime los headers de la solicitud
-    res.header({
-        "custom-header": "Valor del header personalizado"
-    });
-    res.send('Lista de mensajes');// Mensaje de respuesta
+    response.success(req, res, 'Lista de mensajes');
 });
 router.post('/message', (req, res) => {
+    // Si por query viene la variable 'error', se
+    // imprime un error simulado
+    if (req.query.error == 'ok') {
+        response.error(req, res, 'Error simulado', 400);
+    } else {
+        response.success(req, res, 'Creado correctamente', 201);
+    }
+});
+router.delete('/message', (req, res) => {
+    res.send(`Mensaje: ${req.body.message}`);
+});
+app.listen(port, () => {
+    console.log(`Corriendo el servidor en: http//localhost:${port}`);
+});
+router.get('/', (req, res) => {
+    // Imprime los headers de la solicitud
+    console.log(req.headers);
+    // Imprime el query de la solicitud
+    console.log(req.query);
+    // Imprimie el body de la solicitud
+    console.log(req.body);
     // Agrega un estado y una respuesta estructurada
     res.status(201).send({
         error: '',
         body: 'Creado correctamente'
     });
-});
-router.delete('/message', (req, res) => {
-    console.log(req.query);// Imprime el query de la solicitud
-    console.log(req.body);// Imprimie el body de la solicitud
-    res.send(`Mensaje: ${req.body.message}`);
-});
-
-app.listen(port, () => {
-    console.log(`Corriendo el servidor en: http//localhost:${port}`);
+    res.send('Inicio');
 });
