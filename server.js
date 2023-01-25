@@ -23,7 +23,11 @@ router.get('/message', (req, res) => {
     res.send('Lista de mensajes');// Mensaje de respuesta
 });
 router.post('/message', (req, res) => {
-    res.send('Mensaje añadido');
+    // Agrega un estado y una respuesta estructurada
+    res.status(201).send({
+        error: '',
+        body: 'Creado correctamente'
+    });
 });
 router.delete('/message', (req, res) => {
     console.log(req.query);// Imprime el query de la solicitud
