@@ -23,7 +23,7 @@ router.post('/message', (req, res) => {
     // Si por query viene la variable 'error', se
     // imprime un error simulado
     if (req.query.error == 'ok') {
-        response.error(req, res, 'Error simulado', 400);
+        response.error(req, res, 'Error inesperado', 400, 'Estos es una simulación de errores');
     } else {
         response.success(req, res, 'Creado correctamente', 201);
     }
