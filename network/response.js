@@ -1,4 +1,9 @@
 /**
+ * Archivo de Capa de Red para configurar
+ * todas las respuestas
+ */
+
+/**
  * @param {object} req Request
  * @param {object} res Response
  * @param {string} message Respuesta personalizada
