@@ -4,6 +4,7 @@
  */
 const express = require('express');
 const response = require('../../network/response');
+const controller = require('./controller');
 
 const router = express.Router();
 
@@ -12,13 +13,13 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    // Si por query viene la variable 'error', se
-    // imprime un error simulado
-    if (req.query.error == 'ok') {
-        response.error(req, res, 'Error inesperado', 400, 'Estos es una simulación de errores');
-    } else {
-        response.success(req, res, 'Creado correctamente', 201);
-    }
+    controller.addMessage(req.body.user, req.body.message)
+        .then((userCreated) => {
+            response.success(req, res, userCreated, 201);
+        })
+        .catch((error) => {
+            response.error(req, res, 'Información invalida', 400, error);
+        });
 });
 
 router.delete('/', (req, res) => {

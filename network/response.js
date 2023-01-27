@@ -16,8 +16,8 @@ exports.success = (req, res, message, status) => {
     });
 }
 
-exports.error = (req, res, message, status, details) => {
-    console.log(`[Response Error]: ${details}`);
+exports.error = (req, res, message, status, errorDetails) => {
+    console.log(`[Response Error]: ${errorDetails}`);
 
     res.status(status || 500).send({
         'error': message,
