@@ -30,8 +30,9 @@ const addMessage = (message) => {
  * Lista todos los mensajes
  * @returns {array}
  */
-const getMessages = () => {
-    return list;
+const getMessages = async () => {
+    const messages = await Model.find();
+    return messages;
 }
 
 module.exports = {
