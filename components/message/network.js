@@ -28,6 +28,16 @@ router.post('/', (req, res) => {
         });
 });
 
+router.patch('/:id', (req, res) => {
+    controller.updateMessage(req.params.id, req.body.message)
+        .then((data) => {
+            response.success(req, res, data, 200);
+        })
+        .catch((error) => {
+            response.error(req, res, 'Error interno', 500, error);
+        });
+});
+
 router.delete('/', (req, res) => {
     // Imprime los headers de la solicitud
     console.log(req.headers);

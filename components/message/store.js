@@ -15,8 +15,6 @@ db.connect(urlAtlas, {
     .then(() => console.log('[db] Conectada con éxito'))
     .catch(err => console.error('[db]', err));
 
-const list = [];
-
 /**
  * Agrega un mensaje en la colección Messages
  * @param {object} message Datos del mensaje
@@ -35,9 +33,24 @@ const getMessages = async () => {
     return messages;
 }
 
+/**
+ * Actualiza el texto del mensaje
+ * @param {string} id Código del mesaje
+ * @param {string} message Nuevo mensage
+ * @returns 
+ */
+const updateText = async (id, message) => {
+    const foundMessage = await Model.findOne({ _id: id });
+    foundMessage.message = message;
+    const newMessage = await foundMessage.save();
+    console.log(typeof newMessage)
+    return newMessage;
+}
+
 module.exports = {
     add: addMessage,
     list: getMessages,
+    updateText: updateText,
     // get
     // update
     // delete
