@@ -52,11 +52,18 @@ const updateText = async (id, message) => {
     return newMessage;
 }
 
+/**
+ * Permite borrar un mensaje por id
+ * @param {string} id 
+ * @returns {promise} Promesa del borrado
+ */
+const deleteMessage = (id) => {
+    return Model.deleteOne({ _id: id });
+}
+
 module.exports = {
     add: addMessage,
     list: getMessages,
     updateText: updateText,
-    // get
-    // update
-    // delete
+    delete: deleteMessage,
 }

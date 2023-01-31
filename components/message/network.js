@@ -39,15 +39,14 @@ router.patch('/:id', (req, res) => {
         });
 });
 
-router.delete('/', (req, res) => {
-    // Imprime los headers de la solicitud
-    console.log(req.headers);
-    // Imprime el query de la solicitud
-    console.log(req.query);
-    // Imprimie el body de la solicitud
-    console.log(req.body);
-    const message = req.body.message != undefined ? req.body.message : 'No hay mensaje';
-    res.send(`Mensaje: ${message}`);
+router.delete('/:id', (req, res) => {
+    controller.deleteMessage(req.params.id)
+        .then(() => {
+            response.success(req, res, `Usuario ${req.params.id} eliminado`);
+        })
+        .catch((error) => {
+            response.error(req, res, 'Error interno', 500, error);
+        });
 });
 
 module.exports = router;
