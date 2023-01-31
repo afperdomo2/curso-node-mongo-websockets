@@ -26,24 +26,29 @@ const addMessage = (message) => {
 
 /**
  * Lista todos los mensajes
- * @returns {array}
+ * @param {string} filterUser Usuario a filtrar
+ * @returns {array} Listado de mensajes
  */
-const getMessages = async () => {
-    const messages = await Model.find();
+const getMessages = async (filterUser) => {
+    let filter = {};
+    if (filterUser !== null) {
+        //filter = { user: filterUser };
+        filter.user = new RegExp(filterUser, "i");
+    }
+    const messages = await Model.find(filter);
     return messages;
 }
 
 /**
  * Actualiza el texto del mensaje
  * @param {string} id Código del mesaje
- * @param {string} message Nuevo mensage
- * @returns 
+ * @param {string} message Nuevo texto del mensage
+ * @returns {object} Mensaje actualizado
  */
 const updateText = async (id, message) => {
     const foundMessage = await Model.findOne({ _id: id });
     foundMessage.message = message;
     const newMessage = await foundMessage.save();
-    console.log(typeof newMessage)
     return newMessage;
 }
 
