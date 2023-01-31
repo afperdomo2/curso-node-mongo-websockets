@@ -20,9 +20,10 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    controller.addMessage(req.body.user, req.body.message)
-        .then((userCreated) => {
-            response.success(req, res, userCreated, 201);
+    const { user, message } = req.body;
+    controller.addMessage(user, message)
+        .then((messageCreated) => {
+            response.success(req, res, messageCreated, 201);
         })
         .catch((error) => {
             response.error(req, res, 'Información invalida', 400, error);
@@ -30,7 +31,9 @@ router.post('/', (req, res) => {
 });
 
 router.patch('/:id', (req, res) => {
-    controller.updateMessage(req.params.id, req.body.message)
+    const id = req.params.id;
+    const message = req.body.message;
+    controller.updateMessage(id, message)
         .then((data) => {
             response.success(req, res, data, 200);
         })
@@ -40,9 +43,10 @@ router.patch('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    controller.deleteMessage(req.params.id)
+    const id = req.params.id;
+    controller.deleteMessage(id)
         .then(() => {
-            response.success(req, res, `Usuario ${req.params.id} eliminado`);
+            response.success(req, res, `Usuario ${id} eliminado`);
         })
         .catch((error) => {
             response.error(req, res, 'Error interno', 500, error);
