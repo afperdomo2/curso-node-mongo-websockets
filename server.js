@@ -3,7 +3,10 @@
  */
 const express = require('express');
 const bodyParser = require('body-parser');
+const db = require('./db');
 const router = require('./network/routes');
+
+db('mongodb+srv://db_user_curso:rVWPNPD1iqhwseHl@cluster0.ks5tddn.mongodb.net/telegrom'); 
 
 const app = express();
 // BodyParser: Permite definir los tipos de Body
