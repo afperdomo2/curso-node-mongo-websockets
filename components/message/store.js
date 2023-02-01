@@ -19,13 +19,22 @@ const addMessage = (message) => {
  * @returns {array} Listado de mensajes
  */
 const getMessages = async (filterUser) => {
-    let filter = {};
-    if (filterUser !== null) {
-        //filter = { user: filterUser };
-        filter.user = new RegExp(filterUser, "i");
-    }
-    const messages = await Model.find(filter);
-    return messages;
+    return new Promise((resolve, reject) => {
+        let filter = {};
+        if (filterUser !== null) {
+            //filter = { user: filterUser };
+            filter.user = new RegExp(filterUser, "i");
+        }
+        Model.find(filter)
+            .populate('user')
+            .exec((err, populated) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(populated);
+            });
+    });
+    
 }
 
 /**
