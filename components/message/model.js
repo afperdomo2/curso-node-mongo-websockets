@@ -7,6 +7,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const messageSchema = new Schema({
+    chat: {
+        type: Schema.ObjectId,
+        ref: 'Chats',
+        required: true,
+    },
     user: {
         type: Schema.ObjectId,
         ref: 'Users',

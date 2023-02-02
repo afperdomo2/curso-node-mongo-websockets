@@ -16,14 +16,17 @@ const addMessage = (message) => {
 /**
  * Lista todos los mensajes
  * @param {string} filterUser Usuario a filtrar
+ * @param {string} filterChat Chat a filtrar
  * @returns {array} Listado de mensajes
  */
-const getMessages = async (filterUser) => {
+const getMessages = async (filterUser, filterChatId) => {
     return new Promise((resolve, reject) => {
         let filter = {};
         if (filterUser !== null) {
-            //filter = { user: filterUser };
             filter.user = new RegExp(filterUser, "i");
+        }
+        if (filterChatId !== null) {
+            filter.chat = filterChatId;
         }
         Model.find(filter)
             .populate('user')
@@ -34,7 +37,6 @@ const getMessages = async (filterUser) => {
                 resolve(populated);
             });
     });
-    
 }
 
 /**

@@ -4,13 +4,13 @@
 
 const store = require('./store');
 
-const addUser = (name, lastName) => {
+const addUser = (name, last_name) => {
     if (!name) {
         return Promise.reject('Invalid name');
     }
     const user = {
         name: name,
-        last_name: lastName
+        last_name: last_name
     };
     return store.add(user);
 }
