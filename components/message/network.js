@@ -13,7 +13,7 @@ const path = require('path');
  * binario, sino en su formato original
  */
 const storage = multer.diskStorage({
-    destination : "uploads/",
+    destination : "public/files/",
     filename : (req, file, cb) => {
         cb(null, file.fieldname + "-" + Date.now() + 
         path.extname(file.originalname))
@@ -38,7 +38,7 @@ router.get('/', (req, res) => {
 
 router.post('/', upload.single('file'), (req, res) => {
     const { chat, user, message } = req.body;
-    controller.addMessage(chat, user, message)
+    controller.addMessage(chat, user, message, req.file)
         .then((messageCreated) => {
             response.success(req, res, messageCreated, 201);
         })
