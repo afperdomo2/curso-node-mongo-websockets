@@ -3,8 +3,24 @@
  * de los messages
  */
 const express = require('express');
+const multer = require('multer');
 const response = require('../../network/response');
 const controller = require('./controller');
+const path = require('path');
+
+/**
+ * Este bloque es para que no guarde los archivos en
+ * binario, sino en su formato original
+ */
+const storage = multer.diskStorage({
+    destination : "uploads/",
+    filename : (req, file, cb) => {
+        cb(null, file.fieldname + "-" + Date.now() + 
+        path.extname(file.originalname))
+    }
+})
+
+const upload = multer({ storage: storage });
 
 const router = express.Router();
 
@@ -20,7 +36,7 @@ router.get('/', (req, res) => {
         });
 });
 
-router.post('/', (req, res) => {
+router.post('/', upload.single('file'), (req, res) => {
     const { chat, user, message } = req.body;
     controller.addMessage(chat, user, message)
         .then((messageCreated) => {
