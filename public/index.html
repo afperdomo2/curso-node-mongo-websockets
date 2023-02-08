@@ -11,11 +11,11 @@
 </body>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    let socket = io.connect('http://localhost:8080', {
+    let socket = io.connect('http://localhost:3000', {
         forceNew: true,
     });
 
-    socket.on('mensaje', (data) => {
+    socket.on('message', (data) => {
         console.log(data);
     });
 </script>

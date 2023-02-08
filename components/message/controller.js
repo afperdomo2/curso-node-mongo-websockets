@@ -3,6 +3,7 @@
  */
 
 const store = require('./store');
+const { socket } = require('../../socket');
 
 const addMessage = (chat, user, message, file) => {
     return new Promise((resolve, reject) => {
@@ -23,6 +24,7 @@ const addMessage = (chat, user, message, file) => {
             file: fileUrl,
         }
         store.add(messageData);
+        socket.io.emit('message', messageData);
         resolve(messageData);
     });
 
