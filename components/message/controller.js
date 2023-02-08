@@ -1,9 +1,9 @@
 /**
  * Almacena toda la lógica de negocio
  */
-
 const store = require('./store');
 const { socket } = require('../../socket');
+const config = require('../../config');
 
 const addMessage = (chat, user, message, file) => {
     return new Promise((resolve, reject) => {
@@ -13,7 +13,7 @@ const addMessage = (chat, user, message, file) => {
         }
 
         const fileUrl = (file)
-            ? 'http//localhost:3000/app/files/' + file.filename
+            ? `${config.host}:${config.port}/${config.publicRoute}/${config.filesRoute}/${file.filename}`
             : '';
 
         const messageData = {

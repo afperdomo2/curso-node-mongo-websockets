@@ -2,6 +2,12 @@
  * Archivo de Capa de Red para configurar
  * todas las respuestas
  */
+const statusMessages = {
+    '200': 'Done',
+    '201': 'Created',
+    '400': 'Invalid format',
+    '500': 'Internal error',
+};
 
 /**
  * @param {object} req Request
@@ -10,9 +16,17 @@
  * @param {number} status Código del estado
  */
 exports.success = (req, res, message, status) => {
-    res.status(status || 200).send({
-        'error': '',
-        'body': message
+    let statusCode = status;
+    let statusMessage = message;
+    if (!status) {
+        status = 200;
+    }
+    if (!message) {
+        statusMessage = statusMessages[status];
+    }
+    res.status(statusCode).send({ 
+        error: '',
+        body: statusMessage
     });
 }
 

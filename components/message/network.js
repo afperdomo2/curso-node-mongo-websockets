@@ -4,6 +4,8 @@
  */
 const express = require('express');
 const multer = require('multer');
+const config = require('../../config');
+
 const response = require('../../network/response');
 const controller = require('./controller');
 const path = require('path');
@@ -13,7 +15,7 @@ const path = require('path');
  * binario, sino en su formato original
  */
 const storage = multer.diskStorage({
-    destination : "public/files/",
+    destination : `public/${config.filesRoute}/`,
     filename : (req, file, cb) => {
         cb(null, file.fieldname + "-" + Date.now() + 
         path.extname(file.originalname))

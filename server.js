@@ -5,15 +5,14 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 
+const config = require('./config');
+
 const socket = require('./socket');
 const bodyParser = require('body-parser');
 const db = require('./db');
 const router = require('./network/routes');
 
-const URL = 'mongodb+srv://db_user_curso:rVWPNPD1iqhwseHl@cluster0.ks5tddn.mongodb.net/telegrom';
-const PORT = 3000;
-
-db(URL); 
+db(config.dbUrl); 
 
 // BodyParser: Permite definir los tipos de Body
 // que puede recibir el servidor, como por ejemplo:
@@ -26,9 +25,9 @@ router(app);
 socket.connect(server);
 
 // Servir archivos estáticos
-app.use('/app', express.static('public'));
+app.use(`/${config.publicRoute}`, express.static('public'));
 
-server.listen(PORT, () => {
-    console.log(`Servidor de estáticos: http//localhost:${PORT}/app`);
-    console.log(`Corriendo el servidor HTTP en: http//localhost:${PORT}`);
+server.listen(config.port, () => {
+    console.log(`Servidor de estáticos: ${config.host}:${config.port}/app`);
+    console.log(`Corriendo el servidor HTTP en: ${config.host}:${config.port}`);
 });
